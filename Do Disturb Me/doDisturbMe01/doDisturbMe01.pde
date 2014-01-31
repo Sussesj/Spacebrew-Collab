@@ -59,11 +59,11 @@ void draw() {
   rect(width/2,200,300,100);
   
   
-  
+  // draw ResponButton
   if ( recievedText = true) {
     fill(0);
     text("Disturb Me", width/2, 200 + 12);
-  } else {
+  } if( recievedText = false) {
     fill(0);
     text("Leave Me", width/2, 200 + 12);
   }
@@ -77,6 +77,7 @@ void draw() {
       } else {
         fill(disturbFill);
         println("Out of Box");
+        disturbHover = false;
       }
   
   // draw Disturb Me Button
@@ -96,6 +97,7 @@ void draw() {
       } else {
         fill(disturbFill);
         println("Out of Box");
+        disturbHover = false;
       }
   
   // draw do notButton
@@ -105,26 +107,6 @@ void draw() {
   textAlign(CENTER);
   textSize(14);
   text("Leave Me", leaveX, disturbY);
-  
-  
- 
-  
-
-//  // add text to disturb me button
-//  fill(230);
-//  textAlign(CENTER);
-//  textSize(14);
-//  if (mouseX >= (width/3)+disturbSize && mouseX <= width/3 
-//      && mouseY >= disturbButSides && mouseY <= disturbButY) {
-//    fill(0);
-//    
-//  }
-  
-//  if (mousePressed == true) {
-//    text("Yeah I'm ready to talk", width/3, 400 + 12);
-//  } else {
-//    
-//  }
   
 }
 
@@ -147,11 +129,11 @@ void onBooleanMessage( String name, boolean value ){
 
   // update background color
   if (value == true) {
-    currentColor = color_on;
     recievedText = true;
-    println("data send to me");
+    currentColor = color_on;
   } else {
     currentColor = color_off;
     println("No to me");
+    recievedText = false;
   }
 }
