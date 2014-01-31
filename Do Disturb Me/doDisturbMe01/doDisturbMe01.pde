@@ -17,12 +17,22 @@ color color_off = color(255, 255, 255);
 int currentColor = color_off; 
 
 boolean disturbPressed = false;
-boolean DoNotDisturbPressed = false;
+boolean disturbHover = false;
 
-int disturbButFill = color(255,100,255);
-int disturbButSides = 100;
-int disturbButY = 400;
-int disturbButX = width/3;
+boolean leavePressed = false;
+boolean leaveHover = false;
+
+boolean recievedText = false;
+
+
+int disturbFill = color(255,100,255);
+int hoverFill = color(255,0,255);
+int disturbSize = 100;
+int disturbY = 400;
+int disturbX = 150;
+
+int leaveX = 350;
+
 
 void setup() {
   frameRate(240);
@@ -49,32 +59,80 @@ void draw() {
   rect(width/2,200,300,100);
   
   
-  // draw disturbMeButton
-  fill(disturbButFill);
-  rectMode(CENTER);
-  rect(disturbButX, disturbButY,disturbButSides,disturbButSides);
   
-  // draw DoNotdisturbMeButton
-  fill(disturbButFill);
-  rectMode(CENTER);
-  rect(disturbButX+disturbButX,disturbButY,disturbButSides,disturbButSides);
+  if ( recievedText = true) {
+    fill(0);
+    text("Disturb Me", width/2, 200 + 12);
+  } else {
+    fill(0);
+    text("Leave Me", width/2, 200 + 12);
+  }
   
-
-  // add text to disturb me button
-  fill(230);
+  //check hover disturb me
+  if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
+      mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+        disturbHover = true;
+        println("in box");
+        fill(hoverFill);
+      } else {
+        fill(disturbFill);
+        println("Out of Box");
+      }
+  
+  // draw Disturb Me Button
+  rectMode(CENTER);
+  rect(disturbX, disturbY, disturbSize, disturbSize);
+  fill(disturbFill);
   textAlign(CENTER);
   textSize(14);
-  if (mousePressed == true) {
-    text("Yeah I'm ready to talk", width/3, 400 + 12);
-  } else {
-    text("Disturb Me", width/3, 400 + 12);
-  }
+  text("Disturb Me", disturbX, disturbY);
+  
+  //check hover Leave Me button
+  if (mouseX > leaveX-disturbSize && mouseX < leaveX+disturbSize &&
+      mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+        leaveHover = true;
+        println("in box");
+        fill(hoverFill);
+      } else {
+        fill(disturbFill);
+        println("Out of Box");
+      }
+  
+  // draw do notButton
+  rectMode(CENTER);
+  rect(leaveX, disturbY, disturbSize, disturbSize);
+  fill(disturbFill);
+  textAlign(CENTER);
+  textSize(14);
+  text("Leave Me", leaveX, disturbY);
+  
+  
+ 
+  
+
+//  // add text to disturb me button
+//  fill(230);
+//  textAlign(CENTER);
+//  textSize(14);
+//  if (mouseX >= (width/3)+disturbSize && mouseX <= width/3 
+//      && mouseY >= disturbButSides && mouseY <= disturbButY) {
+//    fill(0);
+//    
+//  }
+  
+//  if (mousePressed == true) {
+//    text("Yeah I'm ready to talk", width/3, 400 + 12);
+//  } else {
+//    
+//  }
   
 }
 
 void mousePressed() {
   // send message to spacebrew
+  if(disturbHover = true) {
   sb.send( "button_pressed", true);
+  }
   
 }
 
@@ -90,11 +148,10 @@ void onBooleanMessage( String name, boolean value ){
   // update background color
   if (value == true) {
     currentColor = color_on;
-    fill(0);
-    text("Yeah I'm ready to talk", width/2, 200 + 12);
+    recievedText = true;
+    println("data send to me");
   } else {
     currentColor = color_off;
-    fill(0);
-    text("Disturb Me", width/2, 200 + 12);
+    println("No to me");
   }
 }
