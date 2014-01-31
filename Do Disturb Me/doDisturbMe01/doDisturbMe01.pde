@@ -57,26 +57,21 @@ void draw() {
   fill( currentColor );
   rectMode(CENTER);
   rect(width/2,200,300,100);
-  
-  
-  // draw ResponButton
   if ( recievedText = true) {
     fill(0);
     text("Disturb Me", width/2, 200 + 12);
-  } if( recievedText = false) {
-    fill(0);
-    text("Leave Me", width/2, 200 + 12);
   }
+  
   
   //check hover disturb me
   if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
       mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
         disturbHover = true;
-        println("in box");
+        //println("in box");
         fill(hoverFill);
       } else {
         fill(disturbFill);
-        println("Out of Box");
+        //println("Out of Box");
         disturbHover = false;
       }
   
@@ -92,11 +87,11 @@ void draw() {
   if (mouseX > leaveX-disturbSize && mouseX < leaveX+disturbSize &&
       mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
         leaveHover = true;
-        println("in box");
+        //println("in box");
         fill(hoverFill);
       } else {
         fill(disturbFill);
-        println("Out of Box");
+        //println("Out of Box");
         disturbHover = false;
       }
   
@@ -131,9 +126,12 @@ void onBooleanMessage( String name, boolean value ){
   if (value == true) {
     recievedText = true;
     currentColor = color_on;
+    println("Who is sending " + name);
   } else {
     currentColor = color_off;
     println("No to me");
     recievedText = false;
   }
+  
+  
 }
