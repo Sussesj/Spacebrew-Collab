@@ -17,9 +17,6 @@ color color_off = color(255, 255, 255);
 int currentColor = color_off; 
 
 boolean disturbPressed = false;
-boolean doNotDisturbPressed = false;
-int count = 0;
-
 
 void setup() {
   frameRate(240);
@@ -57,22 +54,11 @@ void draw() {
   fill(230);
   textAlign(CENTER);
   textSize(24);
-  
   if (mousePressed == true) {
-    disturbPressed = true;
-    println("disturb me");
-    count += 1;
-    println("count " + count);
-    if(count >= 2) {
-      disturbPressed = false;
-      count = 0;
-    }
-//    fill(0);
-//    text("Yeah I'm ready to talk", width/2, 400 + 12);
+    fill(0);
+    text("Yeah I'm ready to talk", width/2, 400 + 12);
   } else {
-//   text("Disturb Me", width/2, 400 + 12);
-    doNotDisturbPressed = true;
-    println("DO NOT disturb me");
+    text("Disturb Me", width/2, 400 + 12);
 }
 }
 
