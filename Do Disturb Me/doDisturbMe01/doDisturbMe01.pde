@@ -17,6 +17,12 @@ color color_off = color(255, 255, 255);
 int currentColor = color_off; 
 
 boolean disturbPressed = false;
+boolean DoNotDisturbPressed = false;
+
+int disturbButFill = color(255,100,255);
+int disturbButSides = 100;
+int disturbButY = 400;
+int disturbButX = width/3;
 
 void setup() {
   frameRate(240);
@@ -44,22 +50,26 @@ void draw() {
   
   
   // draw disturbMeButton
-  fill(255,0,0);
-  stroke(200,0,0);
+  fill(disturbButFill);
   rectMode(CENTER);
-  rect(width/2,400,300,100);
+  rect(disturbButX, disturbButY,disturbButSides,disturbButSides);
+  
+  // draw DoNotdisturbMeButton
+  fill(disturbButFill);
+  rectMode(CENTER);
+  rect(disturbButX+disturbButX,disturbButY,disturbButSides,disturbButSides);
   
 
   // add text to disturb me button
   fill(230);
   textAlign(CENTER);
-  textSize(24);
+  textSize(14);
   if (mousePressed == true) {
-    fill(0);
-    text("Yeah I'm ready to talk", width/2, 400 + 12);
+    text("Yeah I'm ready to talk", width/3, 400 + 12);
   } else {
-    text("Disturb Me", width/2, 400 + 12);
-}
+    text("Disturb Me", width/3, 400 + 12);
+  }
+  
 }
 
 void mousePressed() {
