@@ -1,9 +1,9 @@
 /*
- * Button Example
- *
- *   Spacebrew library button example that send and receives boolean messages.  
- * 
- */
+* Button Example
+*
+* Spacebrew library button example that send and receives boolean messages.
+*
+*/
 import spacebrew.*;
 
 String server="sandbox.spacebrew.cc";
@@ -14,7 +14,7 @@ Spacebrew sb;
 
 color color_on = color(255, 255, 50);
 color color_off = color(255, 255, 255);
-int currentColor = color_off; 
+int currentColor = color_off;
 
 boolean disturbPressed = false;
 boolean disturbHover = false;
@@ -42,7 +42,7 @@ void setup() {
   sb = new Spacebrew( this );
 
   // declare your publishers
-  sb.addPublish( "button_pressed", "boolean", true ); 
+  sb.addPublish( "button_pressed", "boolean", true );
 
 
   // declare your subscribers
@@ -53,7 +53,7 @@ void setup() {
 }
 
 void draw() {
-  // draw ResponButton 
+  // draw ResponButton
   fill( currentColor );
   rectMode(CENTER);
   rect(width/2,200,300,100);
@@ -120,7 +120,7 @@ void mouseReleased() {
 }
 
 void onBooleanMessage( String name, boolean value ){
-  println("got bool message " + name + " : " + value); 
+  println("got bool message " + name + " : " + value);
 
   // update background color
   if (value == true) {
@@ -135,3 +135,6 @@ void onBooleanMessage( String name, boolean value ){
   
   
 }
+
+
+
