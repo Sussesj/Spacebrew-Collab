@@ -6,14 +6,14 @@
 */
 import spacebrew.*;
 
-String server="54.201.24.223";
+String server="54.201.24.223"; //until spacebrew is up running again. 
 String name="Susse";
-String description ="Client that sends and receives boolean messages. Background turns yellow when message received.";
+String description ="Client that sends and receives boolean messages. Background turns Green when message received.";
 
 Spacebrew sb;
 
 //Set color for recieving signal
-color color_on = color(0, 173, 159, 2);
+color color_on = color(0, 173, 159);
 color color_off = color(255, 255, 255);
 int currentColor = color_off;
 
@@ -25,9 +25,11 @@ boolean leaveHover = false;
 
 boolean recievedText = false;
 
+color disturbFill = color(0,173,159);
+color hoverFill = color(5,128,127);
+int interactColor = disturbFill;
 
-int disturbFill = color(0,173,159);
-int hoverFill = color(5,128,127);
+
 int strokeColor = color(62,62,62);
 int disturbSize = 100;
 int disturbY = 400;
@@ -56,55 +58,71 @@ void setup() {
 }
 
 void draw() {
-  // draw ResponButton
+  
+  // draw Response Button
   fill( currentColor );
   rectMode(CENTER);
+  stroke(strokeColor);
   rect(width/2,200,300,100);
-  if ( recievedText = true) {
+  fill(color_on);
+  text("Leave Me", width/2, 200 + 12);
+  
+  if ( recievedText == true) {
     fill(strokeColor);
     text("Disturb Me", width/2, 200 + 12);
-  }
+  } 
   
-  
-  //check hover disturb me
+  //check if hover disturb me
   if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
       mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
         disturbHover = true;
-        //println("in box");
-        fill(hoverFill);
+        println("disturb hover " + disturbHover);
       } else {
-        fill(disturbFill);
-        //println("Out of Box");
         disturbHover = false;
+        println("disturb hover " + disturbHover);
       }
   
   // draw Disturb Me Button
   rectMode(CENTER);
+  fill(interactColor); //light Green
+  noStroke();
   rect(disturbX, disturbY, disturbSize, disturbSize);
-  fill(disturbFill);
+  fill(strokeColor);
   textAlign(CENTER);
-  textSize(14);
+  textSize(12);
   text("Disturb Me", disturbX, disturbY);
+    
+  if(disturbHover == true) {
+     interactColor = hoverFill;
+  }  else {
+     interactColor = disturbFill;
+  }
   
   //check hover Leave Me button
   if (mouseX > leaveX-disturbSize && mouseX < leaveX+disturbSize &&
       mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
         leaveHover = true;
-        //println("in box");
-        fill(hoverFill);
+        println("leave hover " + leaveHover);
       } else {
-        fill(disturbFill);
-        //println("Out of Box");
-        disturbHover = false;
+        leaveHover = false;
+        println("leave hover " + leaveHover);
       }
   
   // draw do notButton
   rectMode(CENTER);
+  fill(interactColor); //light Green
   rect(leaveX, disturbY, disturbSize, disturbSize);
-  fill(disturbFill);
+  fill(strokeColor);
   textAlign(CENTER);
-  textSize(14);
+  textSize(12);
   text("Leave Me", leaveX, disturbY);
+  
+  if(leaveHover == true) {
+    stroke(hoverFill);
+    noFill();
+    rect(disturbX, disturbY, disturbSize, disturbSize);
+  }
+ 
   
 }
 
