@@ -1,5 +1,5 @@
 /*
-*
+* Stephanie's Interface!
 * Spacebrew Collab Feb 2014
 * Stephanie Alexandra Rose Burgess & Susse Sønderby
 * Parsons The New School For Design 
@@ -35,18 +35,22 @@ color leaveFill = color(0,173,159);
 color leaveHoverFill = color(5,128,127);
 int leaveInteractColor = disturbFill;
 
+int responseButtX = 80;
+int responseButtWidth = 200;
+int responseButtHeight = 80;
 
 int strokeColor = color(62,62,62);
 int disturbSize = 100;
-int disturbY = 400;
-int disturbX = 150;
+int disturbY = 250;
+int disturbX = 90;
 
-int leaveX = 350;
+int leaveX = 220;
+
 
 
 void setup() {
   frameRate(240);
-  size(500, 600);
+  size(300, 400);
   background(246,246,246);
 
   // instantiate the spacebrewConnection variable
@@ -61,6 +65,12 @@ void setup() {
 
   // connect to spacebre
   sb.connect(server, name, description );
+  
+  //write text
+   fill(strokeColor);
+   textAlign(CENTER);
+   textSize(14);
+   text( name + ", set your status:", width/2, 170);
 }
 
 void draw() {
@@ -69,13 +79,13 @@ void draw() {
     fill( currentColor );
     rectMode(CENTER);
     stroke(strokeColor);
-    rect(width/2,200,300,100);
+    rect(width/2, responseButtX,responseButtWidth,responseButtHeight);
     fill(color_on);
-    text("Leave Me", width/2, 200 + 12);
+    text("Susse says: Leave Me" , width/2, responseButtX);
     
     if ( recievedText == true) {
       fill(strokeColor);
-      text("Disturb Me", width/2, 200 + 12);
+      text("Susse says: Disturb Me", width/2, responseButtX);
     } 
     
     //check if hover disturb me
@@ -130,7 +140,7 @@ void draw() {
     }  else {
        leaveInteractColor = leaveFill;
     }
-  
+ 
 }
 
 void mousePressed() {
