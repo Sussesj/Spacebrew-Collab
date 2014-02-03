@@ -1,8 +1,8 @@
 /*
 *
-* Spacebrew library 
+* Spacebrew Collab Feb 2014
 * Stephanie Alexandra Rose Burgess & Susse Sønderby
-* Parsons The New School For Design Feb 2014
+* Parsons The New School For Design 
 */
 import spacebrew.*;
 
@@ -12,7 +12,8 @@ String description ="Client that sends and receives boolean messages. Background
 
 Spacebrew sb;
 
-color color_on = color(255, 255, 50);
+//Set color for recieving signal
+color color_on = color(0, 173, 159, 2);
 color color_off = color(255, 255, 255);
 int currentColor = color_off;
 
@@ -25,8 +26,9 @@ boolean leaveHover = false;
 boolean recievedText = false;
 
 
-int disturbFill = color(255,100,255);
-int hoverFill = color(255,0,255);
+int disturbFill = color(0,173,159);
+int hoverFill = color(5,128,127);
+int strokeColor = color(62,62,62);
 int disturbSize = 100;
 int disturbY = 400;
 int disturbX = 150;
@@ -37,6 +39,7 @@ int leaveX = 350;
 void setup() {
   frameRate(240);
   size(500, 600);
+  background(246,246,246);
 
   // instantiate the spacebrewConnection variable
   sb = new Spacebrew( this );
@@ -58,7 +61,7 @@ void draw() {
   rectMode(CENTER);
   rect(width/2,200,300,100);
   if ( recievedText = true) {
-    fill(0);
+    fill(strokeColor);
     text("Disturb Me", width/2, 200 + 12);
   }
   
