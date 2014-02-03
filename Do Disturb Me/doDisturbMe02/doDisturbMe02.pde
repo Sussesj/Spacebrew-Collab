@@ -7,7 +7,7 @@
 import spacebrew.*;
 
 String server="54.201.24.223";
-String name="Susse";
+String name="Stephanie";
 String description ="Client that sends and receives boolean messages. Background turns yellow when message received.";
 
 Spacebrew sb;
