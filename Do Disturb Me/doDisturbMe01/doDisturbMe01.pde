@@ -25,9 +25,15 @@ boolean leaveHover = false;
 
 boolean recievedText = false;
 
+//color For interacting with disturb button
 color disturbFill = color(0,173,159);
-color hoverFill = color(5,128,127);
-int interactColor = disturbFill;
+color disturbHoverFill = color(5,128,127);
+int disturbInteractColor = disturbFill;
+
+//color For interacting with leave button
+color leaveFill = color(0,173,159);
+color leaveHoverFill = color(5,128,127);
+int leaveInteractColor = disturbFill;
 
 
 int strokeColor = color(62,62,62);
@@ -59,76 +65,77 @@ void setup() {
 
 void draw() {
   
-  // draw Response Button
-  fill( currentColor );
-  rectMode(CENTER);
-  stroke(strokeColor);
-  rect(width/2,200,300,100);
-  fill(color_on);
-  text("Leave Me", width/2, 200 + 12);
-  
-  if ( recievedText == true) {
-    fill(strokeColor);
-    text("Disturb Me", width/2, 200 + 12);
-  } 
-  
-  //check if hover disturb me
-  if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
-      mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
-        disturbHover = true;
-        println("disturb hover " + disturbHover);
-      } else {
-        disturbHover = false;
-        println("disturb hover " + disturbHover);
-      }
-  
-  // draw Disturb Me Button
-  rectMode(CENTER);
-  fill(interactColor); //light Green
-  noStroke();
-  rect(disturbX, disturbY, disturbSize, disturbSize);
-  fill(strokeColor);
-  textAlign(CENTER);
-  textSize(12);
-  text("Disturb Me", disturbX, disturbY);
+    // draw Response Button
+    fill( currentColor );
+    rectMode(CENTER);
+    stroke(strokeColor);
+    rect(width/2,200,300,100);
+    fill(color_on);
+    text("Leave Me", width/2, 200 + 12);
     
-  if(disturbHover == true) {
-     interactColor = hoverFill;
-  }  else {
-     interactColor = disturbFill;
-  }
-  
-  //check hover Leave Me button
-  if (mouseX > leaveX-disturbSize && mouseX < leaveX+disturbSize &&
-      mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
-        leaveHover = true;
-        println("leave hover " + leaveHover);
-      } else {
-        leaveHover = false;
-        println("leave hover " + leaveHover);
-      }
-  
-  // draw do notButton
-  rectMode(CENTER);
-  fill(interactColor); //light Green
-  rect(leaveX, disturbY, disturbSize, disturbSize);
-  fill(strokeColor);
-  textAlign(CENTER);
-  textSize(12);
-  text("Leave Me", leaveX, disturbY);
-  
-  if(leaveHover == true) {
-    stroke(hoverFill);
-    noFill();
+    if ( recievedText == true) {
+      fill(strokeColor);
+      text("Disturb Me", width/2, 200 + 12);
+    } 
+    
+    //check if hover disturb me
+    if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
+        mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+          disturbHover = true;
+          println("disturb hover " + disturbHover);
+        } else {
+          disturbHover = false;
+          println("disturb hover " + disturbHover);
+        }
+    
+    // draw Disturb Me Button
+    rectMode(CENTER);
+    fill(disturbInteractColor); //light Green
+    noStroke();
     rect(disturbX, disturbY, disturbSize, disturbSize);
-  }
- 
+    fill(strokeColor);
+    textAlign(CENTER);
+    textSize(12);
+    text("Disturb Me", disturbX, disturbY);
+      
+    // Change color on Disturb Me Button  
+    if(disturbHover == true) {
+       disturbInteractColor = disturbHoverFill;
+    }  else {
+       disturbInteractColor = disturbFill;
+    }
+    
+    //check hover Leave Me button
+    if (mouseX > leaveX-disturbSize && mouseX < leaveX+disturbSize &&
+        mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+          leaveHover = true;
+          println("leave hover " + leaveHover);
+        } else {
+          leaveHover = false;
+          println("leave hover " + leaveHover);
+        }
+    
+    // draw do notButton
+    rectMode(CENTER);
+    fill(leaveInteractColor); //light Green
+    rect(leaveX, disturbY, disturbSize, disturbSize);
+    fill(strokeColor);
+    textAlign(CENTER);
+    textSize(12);
+    text("Leave Me", leaveX, disturbY);
+    
+    // Change color on Disturb Me Button
+    if(leaveHover == true) {
+       leaveInteractColor = leaveHoverFill;
+    }  else {
+       leaveInteractColor = leaveFill;
+    }
   
 }
 
 void mousePressed() {
   // send message to spacebrew
-  if(disturbHover = true) {
+  if(disturbHover == true) {
   sb.send( "button_pressed", true);
   }
   
