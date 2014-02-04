@@ -16,7 +16,7 @@ Spacebrew sb;
 color color_on = color(180,176,227);
 color color_off = color(255, 255, 255);
 int currentColor = color_off;
-
+int circleSize = 200; //diameter of circle
 boolean disturbPressed = false;
 boolean disturbHover = false;
 
@@ -96,15 +96,15 @@ void draw() {
     rectMode(CENTER);
     stroke(strokeColor);
     ellipse(width/2, responseButtX,responseButtWidth,responseButtHeight);
-    ellipse(width/2, responseButtX,responseButtWidth/2,responseButtHeight);
     fill(color_on);
     fill(strokeColor);
     text("Disturb Me!", width/2, responseButtX);
     } 
     
     //check if hover disturb me
-    if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
-        mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+//    if (sqrt(sq(mouseX) + sq(mouseY)) < 200/2) {
+    if (mouseX > disturbX-disturbSize/2 && mouseX < disturbX+disturbSize/2 &&
+        mouseY > disturbY-disturbSize/2 && mouseY < disturbY+disturbSize/2) {
           disturbHover = true;
           println("disturb hover " + disturbHover);
         } else {
@@ -130,8 +130,8 @@ void draw() {
     }
     
     //check hover Leave Me button
-    if (mouseX >= leaveX-disturbSize && mouseX <= leaveX+disturbSize &&
-        mouseY >= disturbY-disturbSize && mouseY <= disturbY+disturbSize) {
+    if (mouseX >= leaveX-disturbSize/2 && mouseX <= leaveX+disturbSize/2 &&
+        mouseY >= disturbY-disturbSize/2 && mouseY <= disturbY+disturbSize/2) {
           leaveHover = true;
           println("leave hover " + leaveHover);
         } else {
@@ -142,7 +142,7 @@ void draw() {
     // draw do notButton
     rectMode(CENTER);
     fill(leaveInteractColor); //light Green
-    ellipse(leaveX, disturbY, disturbSize, disturbSize);
+    rect(leaveX, disturbY, disturbSize, disturbSize);
     fill(strokeColor);
     textAlign(CENTER);
     textSize(12);

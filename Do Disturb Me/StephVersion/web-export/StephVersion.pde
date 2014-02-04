@@ -1,5 +1,5 @@
 /*
-* Susse's Interface!
+* Stephanie's Interface!
 * Spacebrew Collab Feb 2014
 * Stephanie Alexandra Rose Burgess & Susse Sønderby
 * Parsons The New School For Design 
@@ -7,7 +7,7 @@
 import spacebrew.*;
 
 String server="54.201.24.223"; //until spacebrew is up running again. 
-String name="Susse";
+String name="Stephanie";
 String description ="Client that sends and receives boolean messages. Background turns Green when message received.";
 
 Spacebrew sb;
@@ -16,7 +16,7 @@ Spacebrew sb;
 color color_on = color(180,176,227);
 color color_off = color(255, 255, 255);
 int currentColor = color_off;
-
+int circleSize = 200; //diameter of circle
 boolean disturbPressed = false;
 boolean disturbHover = false;
 
@@ -88,7 +88,7 @@ void draw() {
     ellipse(width/2, responseButtX,responseButtWidth,responseButtHeight);
     fill(color_on);
     fill(strokeColor);
-    text("Stephanie says:", width/2, 25);
+    text("Susse says:", width/2, 25);
     text("Leave Me" , width/2, responseButtX);
     
     if ( recievedText == true) {
@@ -96,17 +96,15 @@ void draw() {
     rectMode(CENTER);
     stroke(strokeColor);
     ellipse(width/2, responseButtX,responseButtWidth,responseButtHeight);
-    ellipse(width/2, responseButtX,responseButtWidth/2,responseButtHeight);
     fill(color_on);
     fill(strokeColor);
     text("Disturb Me!", width/2, responseButtX);
     } 
     
     //check if hover disturb me
-    boolean overCircle(int x, int y, int diameter) {
-    if (sqrt(sq(mouseX) + sq(mouseY)) < diameter/2) {
-//    if (mouseX > disturbX-disturbSize && mouseX < disturbX+disturbSize &&
-//        mouseY > disturbY-disturbSize && mouseY < disturbY+disturbSize) {
+//    if (sqrt(sq(mouseX) + sq(mouseY)) < 200/2) {
+    if (mouseX > disturbX-disturbSize/2 && mouseX < disturbX+disturbSize/2 &&
+        mouseY > disturbY-disturbSize/2 && mouseY < disturbY+disturbSize/2) {
           disturbHover = true;
           println("disturb hover " + disturbHover);
         } else {
@@ -132,8 +130,8 @@ void draw() {
     }
     
     //check hover Leave Me button
-    if (mouseX >= leaveX-disturbSize && mouseX <= leaveX+disturbSize &&
-        mouseY >= disturbY-disturbSize && mouseY <= disturbY+disturbSize) {
+    if (mouseX >= leaveX-disturbSize/2 && mouseX <= leaveX+disturbSize/2 &&
+        mouseY >= disturbY-disturbSize/2 && mouseY <= disturbY+disturbSize/2) {
           leaveHover = true;
           println("leave hover " + leaveHover);
         } else {
@@ -144,7 +142,7 @@ void draw() {
     // draw do notButton
     rectMode(CENTER);
     fill(leaveInteractColor); //light Green
-    ellipse(leaveX, disturbY, disturbSize, disturbSize);
+    rect(leaveX, disturbY, disturbSize, disturbSize);
     fill(strokeColor);
     textAlign(CENTER);
     textSize(12);
@@ -194,3 +192,4 @@ void onBooleanMessage( String name, boolean value ){
   
   
 }
+
