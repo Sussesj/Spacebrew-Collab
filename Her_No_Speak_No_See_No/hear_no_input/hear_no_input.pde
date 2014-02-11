@@ -1,7 +1,7 @@
 
 import spacebrew.*;
 
-String server="54.201.24.223";
+String server="sandbox.spacebrew.cc";
 String name="Susse Input";
 String description ="Client that sends and receives range messages. Range values go from 0 to 1023.";
 
