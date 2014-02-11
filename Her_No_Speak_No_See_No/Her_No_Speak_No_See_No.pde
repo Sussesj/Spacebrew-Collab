@@ -214,7 +214,7 @@ if ( millis() - corpseStarted < 10000 ){
     if (recording_received == true) {
       frameO = (frameO+1) % numFrames2;  // Use % to cycle through frames
       int offset = 0;
-      for (int x = 400; x < 800; x += images2[0].width) { 
+      for (int x = 465; x < 850; x += images2[0].width) { 
         image(images2[(frameO+offset) % numFrames2], x, 90);
       }
 
@@ -231,7 +231,7 @@ if ( millis() - corpseStarted < 10000 ){
 
       frame = (frame+1) % numFrames;  // Use % to cycle through frames
       int offset = 0;
-      for (int x = 400; x < 800; x += images[0].width) { 
+      for (int x = 465; x < 850; x += images[0].width) { 
         image(images[(frame+offset) % numFrames], x, 90);
       }
     }
