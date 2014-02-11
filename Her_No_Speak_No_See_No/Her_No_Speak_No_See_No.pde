@@ -181,7 +181,7 @@ void draw() {
   }
 
   // ---- start person 1 ---- //
-  if ( millis() - corpseStarted < 1000 ) {
+  if ( millis() - corpseStarted < 10000 ) {
     noFill();
     stroke(255);
     rect(0, 0, width / 3.0, height );
@@ -198,7 +198,7 @@ void draw() {
 
     // ---- start person 2 ---- //
   } 
-  else if ( millis() - corpseStarted < 2000 ) {
+  else if ( millis() - corpseStarted < 20000 ) {
     noFill();
     stroke(255);
     rect(width / 3.0, 0, width / 3.0, height );
@@ -216,7 +216,7 @@ void draw() {
 
     // ---- start person 3 ---- //
   } 
-  else if ( millis() - corpseStarted < 12000 ) {
+  else if ( millis() - corpseStarted < 30000 ) {
 
     stroke(255);
     fill(lightBeige);
@@ -238,7 +238,7 @@ void draw() {
     //animation timer
     stroke(rouge);
     strokeWeight(3);
-    float X = map(millis(), corpseStarted + 2000, corpseStarted + 12000, width*2/3, width);
+    float X = map(millis(), corpseStarted + 20000, corpseStarted + 30000, width*2/3, width);
     line(X, height - 20, X, height);
     
 
