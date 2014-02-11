@@ -42,7 +42,7 @@ color rouge = color(194, 23, 21);
 
 //Steph's variables
 
-/* @pjs preload="123.png, 1234.png, 12- dont speak.png, 13- dont speak.png, 3- dont speak.png, 4- dont speak.png, 5- dont speak.png, 6- dont speak.png, 7- dont speak.png, 8- dont speak.png, 9- dont speak.png, 10- dont speak.png, 11- dont speak.png"; */
+/* @pjs preload="1231.png, 12341.png, 12- dont speak.png, 13- dont speak.png, 3- dont speak.png, 4- dont speak.png, 5- dont speak.png, 6- dont speak.png, 7- dont speak.png, 8- dont speak.png, 9- dont speak.png, 10- dont speak.png, 11- dont speak.png"; */
 
 int numFrames = 11; //the number of frames in the animation
 int numFrames2 = 2; // number of frames receiving
@@ -52,7 +52,7 @@ PImage[] images = new PImage [numFrames];
 PImage[] images2 = new PImage [numFrames2];
 boolean recording_received = false;
 
-
+int stephTimer = 0;
 
 
 
@@ -121,9 +121,8 @@ void setup() {
   images[8] = loadImage("9- dont speak.png");
   images[9] = loadImage("10- dont speak.png");
   images[10] = loadImage("11- dont speak.png");
-
-  images2[0] = loadImage("123.png");
-  images2[1] = loadImage("1234.png");
+  images2[0] = loadImage("1231.png");
+  images2[1] = loadImage("12341.png");
 
 
 
@@ -148,6 +147,8 @@ void setup() {
   sb.addPublish("doneExquisite", "boolean", false);
   sb.addSubscribe("startExquisite", "boolean");
 
+  sb.addSubscribe("stephInput", "boolean");
+
   // add any of your own subscribers here!
 
   sb.connect( server, name, desc );
@@ -167,21 +168,6 @@ void draw() {
   // ---- start person 1 ---- //
   bNeedToClear = true;
   if ( millis() - corpseStarted < 10000 ) {
-    noFill();
-    stroke(255);
-    //    rect(0,0, width / 3.0, height );
-    //     fill(194, 23, 21);
-    //    ellipse(width/2, width/3, height/2, height/2);
-
-    frame = (frame+1) % numFrames;  // Use % to cycle through frames
-    int offset = 0;
-    for (int x = 400; x < 800; x += images[0].width) { 
-      image(images[(frame+offset) % numFrames], x, 90);
-    }
-
-
-
-
 
 
 
@@ -190,6 +176,33 @@ void draw() {
     // ---- start person 2 ---- //
   } 
   else if ( millis() - corpseStarted < 20000 ) {
+
+
+
+    if (recording_received == true) {
+      frameO = (frameO+1) % numFrames2;  // Use % to cycle through frames
+      int offset = 0;
+      for (int x = 400; x < 800; x += images2[0].width) { 
+        image(images2[(frameO+offset) % numFrames2], x, 90);
+      }
+
+      if (millis() - stephTimer > 2000) {
+        recording_received = false;
+      }
+    } 
+    else {
+      noFill();
+      stroke(255);
+      //    rect(0,0, width / 3.0, height );
+      //     fill(194, 23, 21);
+      //    ellipse(width/2, width/3, height/2, height/2);
+
+      frame = (frame+1) % numFrames;  // Use % to cycle through frames
+      int offset = 0;
+      for (int x = 400; x < 800; x += images[0].width) { 
+        image(images[(frame+offset) % numFrames], x, 90);
+      }
+    }
 
 
 
@@ -207,9 +220,6 @@ void draw() {
     stroke(255);
     rect(width * 2.0/ 3.0, 0, width / 3.0, height );
     fill(255);
-
-
-
 
 
 
@@ -240,18 +250,15 @@ void onBooleanMessage( String name, boolean value ) {
     corpseStarted = millis();
     bNeedToClear = true;
   }
- if (recording_received == true) {
-    println("who is sending" + name);
-    frameO = (frameO+1) % numFrames2;  // Use % to cycle through frames
-    int offset = 0;
-    for (int x = 400; x < 800; x += images2[0].width) { 
-      image(images2[(frameO+offset) % numFrames2], x, 90);
-    }
+  if (name.equals("stephInput")) {
+    recording_received = true;
+    println("steph got a message: " + name);
+    stephTimer = millis();
   }
 }
-  void onRangeMessage( String name, int value ) {
-  }
+void onRangeMessage( String name, int value ) {
+}
 
-  void onStringMessage( String name, String value ) {
-  }
+void onStringMessage( String name, String value ) {
+}
 

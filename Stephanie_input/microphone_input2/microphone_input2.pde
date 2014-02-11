@@ -7,7 +7,7 @@
 import spacebrew.*;
 
 String server="sandbox.spacebrew.cc";
-String name="startExquisite";
+String name="Steph's Microphone Input";
 String description ="Client that sends and receives boolean messages. Background turns yellow when message received.";
 
 Spacebrew sb;
@@ -83,12 +83,12 @@ void draw() {
     line( i, 150 + in.right.get(i)*50, i+1, 150 + in.right.get(i+1)*50 );
     float vals= in.left.get(i)*50;
 
-    if (vals <-20) {
+    if (vals < -5) {
 
       println(vals);
       // send message to spacebrew
       sb.send( "recording_received", true);
-      println("true");
+      //println("true");
       frame = (frame+1) % numFrames;  // Use % to cycle through frames
       int offset = 0;
       for (int x = 400; x < 800; x += images[0].width) { 
@@ -98,7 +98,7 @@ void draw() {
 
     if (vals >-20) {
       // send message to spacebrew
-      sb.send( "recording_received", false); 
+      //sb.send( "recording_received", false); 
     }
   }
 }
