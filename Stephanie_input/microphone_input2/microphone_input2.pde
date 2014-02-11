@@ -20,19 +20,21 @@ import ddf.minim.*;
 Minim minim;
 AudioInput in;
 
-/* @pjs preload="123.png, 1234.png"; */
+/* @pjs preload="1231.png, 12341.png"; */
 
 int numFrames = 2; //the number of frames in the animation
 int frame = 0;
 PImage[] images = new PImage [numFrames];
 
 void setup() {
-  background (0);
-  frameRate(2);
-  size(500, 400);
 
-  images[0] = loadImage("123.png");
-  images[1] = loadImage("1234.png");
+  background (0);
+  frameRate(5);
+  size(500, 800);
+  //  numFrames.resize(50,50);
+
+  images[0] = loadImage("1231.png");
+  images[1] = loadImage("12341.png");
 
   // instantiate the spacebrewConnection variable
   sb = new Spacebrew( this );
@@ -55,7 +57,8 @@ void setup() {
 
 void draw() {
   //set background color
-  background (0);
+  background (255);
+  // background (0);
   // draw button
   //  fill(255, 0, 0);
   //  stroke(200, 0, 0);
@@ -74,7 +77,7 @@ void draw() {
   //  }
 
   //background(0);
-  stroke(255);
+  stroke(0);
   //microPhone();
   // draw the waveforms so we can see what we are monitoring
   for (int i = 0; i < in.bufferSize() - 1; i++)
@@ -91,21 +94,21 @@ void draw() {
       //println("true");
       frame = (frame+1) % numFrames;  // Use % to cycle through frames
       int offset = 0;
-      for (int x = 400; x < 800; x += images[0].width) { 
-       image(images[(frame+offset) % numFrames], x, 90);
+      for (int x = 50; x < 400; x += images[0].width) { 
+        image(images[(frame+offset) % numFrames], x, 10);
       }
-    } 
-
-    if (vals >-20) {
-      // send message to spacebrew
-      //sb.send( "recording_received", false); 
     }
-  }
-}
-//void microPhone();
 
-void onBooleanMessage( String name, boolean value ) {
-  println("got bool message " + name + " : " + value); 
+    // if (vals >-20) {
+    // send message to spacebrew
+    //sb.send( "recording_received", false);
+  }
+
+
+  //void microPhone();
+
+  // void onBooleanMessage( String name, boolean value ) {
+  //   println("got bool message " + name + " : " + value); 
   // update background color
   //  if (value == true) {
   //    currentColor = color_on;
