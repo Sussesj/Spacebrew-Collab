@@ -1,21 +1,20 @@
 /*
 Spacebrew Collab Spring 2014
-
-Susse - segment 1 (0-10 seconds):   Hear no evil
-Steph - segment 2 (10-20 seconds):  Speak no evil
-Adiel - segment 3 (20-30 seconds):  See no evil
-
-Color Palette (see below)
-
-
-*/
+ 
+ Susse - segment 1 (0-10 seconds):   Hear no evil
+ Steph - segment 2 (10-20 seconds):  Speak no evil
+ Adiel - segment 3 (20-30 seconds):  See no evil
+ 
+ Color Palette (see below)
+ 
+ 
+ */
 
 import spacebrew.*;
-import ddf.minim.*;
 
 // Spacebrew stuff
-String server ="54.201.24.223";
-String name   = "SusseHearNo";
+String server = "sandbox.spacebrew.cc";
+String name   = "Adiel_Steph_Susse";
 String desc   = "Some stuff";
 
 Spacebrew sb;
@@ -27,29 +26,33 @@ color darkBeige = color(237, 212, 183);
 color rouge = color(194, 23, 21);
 
 //Susse's variables
-//create array for the three monkey images
-PImage[] fragment;
-//create variable for the number of monkeysin the array
-int n=3;
-int time;
-int wait = 1000;
-
-int monkeyVal = 50;
-
-int counter = 0;
-
-AudioPlayer player;
-Minim minim; //audio context
 
 
 
-//Steph's variables
+
+
+
+
+
 
 
 
 
 
 
+//Steph's variables
+
+/* @pjs preload="1231.png, 12341.png, 12- dont speak.png, 13- dont speak.png, 3- dont speak.png, 4- dont speak.png, 5- dont speak.png, 6- dont speak.png, 7- dont speak.png, 8- dont speak.png, 9- dont speak.png, 10- dont speak.png, 11- dont speak.png"; */
+
+int numFrames = 11; //the number of frames in the animation
+int numFrames2 = 2; // number of frames receiving
+int frame = 0;
+int frameO = 0;
+PImage[] images = new PImage [numFrames];
+PImage[] images2 = new PImage [numFrames2];
+boolean recording_received = false;
+
+int stephTimer = 0;
 
 
 
@@ -81,27 +84,10 @@ int corpseStarted   = 0;
 boolean bDrawing    = false;
 boolean bNeedToClear = false;
 
-void setup(){
+void setup() {
   size( appWidth, appHeight );
-  
+
   //Susse's setup
-//assign new values to PImage
-fragment = new PImage[n];
-for(int i =0; i < fragment.length; i++){
-  //I loading images
-  fragment[i]=loadImage(str(i) + ".jpg");
-}
-
-time = millis(); //stores the current time
-
-minim = new Minim(this);
-player = minim.loadFile("true_To_Life.mp3", 2048);
-
-
-
-
-
-//Steph's setup
 
 
 
@@ -114,7 +100,35 @@ player = minim.loadFile("true_To_Life.mp3", 2048);
 
 
 
-//Adiel's setup
+
+
+  //Steph's setup
+
+
+
+  background(0);
+  frameRate(5);
+
+
+  images[0] = loadImage("12- dont speak.png");
+  images[1] = loadImage("13- dont speak.png");
+  images[2] = loadImage("3- dont speak.png");
+  images[3] = loadImage("4- dont speak.png");
+  images[4] = loadImage("5- dont speak.png");
+  images[5] = loadImage("6- dont speak.png");
+  images[6] = loadImage("7- dont speak.png");
+  images[7] = loadImage("8- dont speak.png");
+  images[8] = loadImage("9- dont speak.png");
+  images[9] = loadImage("10- dont speak.png");
+  images[10] = loadImage("11- dont speak.png");
+  images2[0] = loadImage("1231.png");
+  images2[1] = loadImage("12341.png");
+
+
+
+
+
+  //Adiel's setup
 
 
 
@@ -123,179 +137,128 @@ player = minim.loadFile("true_To_Life.mp3", 2048);
 
 
 
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   sb = new Spacebrew(this);
   sb.addPublish("doneExquisite", "boolean", false);
   sb.addSubscribe("startExquisite", "boolean");
-  sb.addPublish("monkeySlider", "range", monkeyVal);
-  
-  
+
+  sb.addSubscribe("stephInput", "boolean");
+
   // add any of your own subscribers here!
-  sb.addSubscribe("moveMonkey", "range");
+
   sb.connect( server, name, desc );
 }
 
-void draw(){
+void draw() {
   // this will make it only render to screen when in EC draw mode
-  if (!bDrawing) return;
-  
+  if (!bDrawing) bDrawing = true; //back to return and delete dDraw
+  //if (!bDrawing) return;
+
   // blank out your background once
-  if ( bNeedToClear ){
+  if ( bNeedToClear ) {
     bNeedToClear = false;
-    background(0); // feel free to change the background color!
-  }
-  
-  // ---- start person 1 ---- //
-  
-  if ( millis() - corpseStarted < 10000 ){
-    fill(lightBeige);
-    stroke(255);
-    rect(0,0, width / 3.0, height );
-    fill(255);
-    
-       
-    //drawing each of the images
-//    for(int i=0; i<fragment.length; i++){
-//        image(fragment[i], 20*i, 100+i);
-//        if(millis() - time >= wait) {
-//          
-//      }
-//        time = millis();//updates the stored 
-//    
-//    }
-  
-  player.play();
-  image(fragment[counter], 100, 200);
-  
-  if((millis() - corpseStarted) < 8000){
-    counter++;
-    if(counter > 2){
-      counter = 0;
-      // add text to button
-      fill(rouge);
-      textAlign(CENTER);
-      textSize(1+monkeyVal);
-      text("DANCE", 200, 600);
-    }
-  } else if ((millis() - corpseStarted) < 12000) {
-    counter++;
-    if(counter > 2){
-      counter = 0;
-    }
-  } else if ((millis() - corpseStarted) < 18000) {
-    counter++;
-    if(counter > 2){
-      counter = 0;
-    }
+    background(255); // feel free to change the background color!
   }
 
-  
-  
-  
-  // ---- start person 2 ---- //
-  } else if ( millis() - corpseStarted < 20000 ){
+  // ---- start person 1 ---- //
+  bNeedToClear = true;
+  if ( millis() - corpseStarted < 10000 ) {
+
+
+
+
+
+    // ---- start person 2 ---- //
+  } 
+  else if ( millis() - corpseStarted < 20000 ) {
+
+
+
+    if (recording_received == true) {
+      frameO = (frameO+1) % numFrames2;  // Use % to cycle through frames
+      int offset = 0;
+      for (int x = 400; x < 800; x += images2[0].width) { 
+        image(images2[(frameO+offset) % numFrames2], x, 90);
+      }
+
+      if (millis() - stephTimer > 2000) {
+        recording_received = false;
+      }
+    } 
+    else {
+      noFill();
+      stroke(255);
+      //    rect(0,0, width / 3.0, height );
+      //     fill(194, 23, 21);
+      //    ellipse(width/2, width/3, height/2, height/2);
+
+      frame = (frame+1) % numFrames;  // Use % to cycle through frames
+      int offset = 0;
+      for (int x = 400; x < 800; x += images[0].width) { 
+        image(images[(frame+offset) % numFrames], x, 90);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    // ---- start person 3 ---- //
+  } 
+  else if ( millis() - corpseStarted < 30000 ) {
     noFill();
     stroke(255);
-    rect(width / 3.0,0, width / 3.0, height );
+    rect(width * 2.0/ 3.0, 0, width / 3.0, height );
     fill(255);
-    minim.stop();
-    
-    
-    
-    
-    
-    
-    
-    
-  // ---- start person 3 ---- //
-  } else if ( millis() - corpseStarted < 30000 ){
-    noFill();
-    stroke(255);
-    rect(width * 2.0/ 3.0,0, width / 3.0, height );
-    fill(255);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  // ---- we're done! ---- //
-  } else {
+
+
+
+
+
+
+
+
+    // ---- we're done! ---- //
+  } 
+  else {
     sb.send( "doneExquisite", true );
     bDrawing = false;
   }
 }
 
-void mousePressed(){
+void mousePressed() {
   // for debugging, comment this out!
   sb.send( "doneExquisite", true );
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 }
 
-void onBooleanMessage( String name, boolean value ){
-  if ( name.equals("startExquisite") ){
+void onBooleanMessage( String name, boolean value ) {
+  println("got boolean message" + name + " : " + value);
+
+  if ( name.equals("startExquisite") ) {
     // start the exquisite corpse process!
     bDrawing = true;
     corpseStarted = millis();
     bNeedToClear = true;
   }
+  if (name.equals("stephInput")) {
+    recording_received = true;
+    println("steph got a message: " + name);
+    stephTimer = millis();
+  }
+}
+void onRangeMessage( String name, int value ) {
 }
 
-void onRangeMessage( String name, int value ){
-  println("moveMonkey" + name + " : " + value);
-  
-  monkeyVal = value;
-  
-  
-  
-  
-  
-  
-  
+void onStringMessage( String name, String value ) {
 }
 
-void onStringMessage( String name, String value ){
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-}
-
-void stop() {
-  player.close();
-  minim.stop();
-  super.stop();
-}
