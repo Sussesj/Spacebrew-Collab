@@ -18,7 +18,7 @@ String remote_string = "";
 JSONObject outgoing = new JSONObject();
 
 void setup(){
-  size(200,300);
+  size(250,300);
   
   //intitiate the spacebrew Connection Variable
   sb = new Spacebrew( this );
@@ -32,12 +32,17 @@ void setup(){
 
 
 void draw(){
-  background(50);
+  background(44,59,72);
+  
+  noFill();
+  stroke(161,212,212);
+  rect(10, 10, width-20,height-20);
   
   // draw latest received message
-  text("This person just entered: ", 30, 120);  
-  text(remote_string, 150, 140);
- 
+  text(remote_string, 150, 140);fill(255);
+  rect(80, 120, 90,20);
+  text("Just entered: ", 90, 100);  
+
 }
 
 void onCustomMessage( String name, String type, String value ){
