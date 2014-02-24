@@ -1,25 +1,36 @@
 
+//declare pins
+int ledPin = 5; 
+int button01 = 13; 
+
+boolean running = false; 
 
 void setup() {
-// open serial port
-Serial.begin(9600);
+  
+  // open serial port
+  Serial.begin(9600);
+
+  pinMode(ledPin, OUTPUT);
+  pinMode(button01, INPUT);
+  digitalWrite(button01, HIGH);
+
 }
  
 void loop() {
-// read and send the value of analog sensor
-long raw_val = analogRead(A0);
-
-
- 
-// use to adjust the range, if necessary
-// int range_offet = 3;
-// int range_size = 60;
-// raw_val = raw_val - range_offet;
-// raw_val = constrain( (raw_val * 1023 / range_size), 0, 1023);
- 
-Serial.println(raw_val);
- 
-// wait to send the next value so that you
-// don't clog up the serial port
-delay(100);
+  
+  if(digitalRead(button01) == LOW) 
+  {
+    //switch is pressed - pullup keeps pin high normally
+    delay(100); //delay to debounce switch
+    running = !running;  //toggle running variable
+    digitalWrite(ledPin, running);
+   }
+    
+    // read and send the boolean value to the serial
+    Serial.println(running);
+   
+    // wait to send the next value so that you
+    // don't clog up the serial port
+    delay(100);
+  
 }

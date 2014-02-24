@@ -10,7 +10,9 @@ Spacebrew sb; // Spacebrew connection object
 Serial myPort; // Serial port object
  
 JSONObject json; // JSON object that will hold data sent to spacebrew
-int value = 0; // holds temp value of the arduino data
+int value = 0; // holds temp value of the arduino data 
+
+boolean buttonOn = false; //set's the parameters of the boolean
  
  
 void setup() {
@@ -20,11 +22,13 @@ size(400, 200);
 json = new JSONObject();
 json.setString("name", name);
 json.setInt("value", value);
+json.setBoolean("buttonPressed", false);
  
 // instantiate the spacebrew object
 sb = new Spacebrew( this );
 // add each thing you publish to
 sb.addPublish( "graph_me", "graphable", json.toString() );
+sb.addPublish( "iPressedButton", "bool", json.toBoolean() );
  
 // connect to spacebrew
 sb.connect(server, name, description );
@@ -38,10 +42,11 @@ myPort.bufferUntil('\n');
  
 // handles serial messages from Arduino
 void serialEvent (Serial myPort) {
- 
+    
 // read data as an ASCII string:
 String inString = myPort.readStringUntil('\n');
  
+
 if (inString != null) {
 // trim off whitespace
 inString = trim(inString);
@@ -50,10 +55,22 @@ println("Received data from Arduino: " + inString);
 // convert value from string to an integer and add to json
 value = int(inString);
 json.setInt("value", value);
+
+json.setBoolean("buttonOn", false);
+
+//checks to see of the button is on or off
+if(value >= 1) {
+  buttonOn = true;
+} else if (value <= 1) {
+  buttonOn = false;
+}
+
+println("Stat of bool: " + buttonOn);
  
 // publish the value to spacebrew if app is connected to spacebrew
 if (sb.connected()) {
 sb.send( "graph_me", json.toString() );
+sb.send( "buttonOn", json.toInt() );
 }
 }
 }
