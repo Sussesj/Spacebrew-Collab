@@ -26,7 +26,9 @@ json.setInt("value", value);
 // instantiate the spacebrew object
 sb = new Spacebrew( this );
 // add each thing you publish to
+sb.addPublish( "graph_me", "graphable", json.toString() );
 sb.addPublish( "buttonOn", "boolean", true );
+//sb.addPublish( "iPressedButton", "bool", json.toBoolean() );
  
 // connect to spacebrew
 sb.connect(server, name, description );
@@ -53,12 +55,9 @@ println("Received data from Arduino: " + inString);
 value = int(inString);
 json.setInt("value", value);
 
-//checks to see of the button is on or off
-if(value >= 1) {
-  buttonOn = true;
-} else if (value <= 1) {
-  buttonOn = false;
-}
+
+
+
 
 println("Stat of bool: " + buttonOn);
  
@@ -66,6 +65,14 @@ println("Stat of bool: " + buttonOn);
 if (sb.connected()) {
 //sb.send( "graph_me", json.toString() );
 
+  //checks to see of the button is on or off
+  if(value >= 1) {
+    buttonOn = true;
+    sb.send( "buttonOn", true);
+  } else if (value <= 1) {
+    buttonOn = false;
+    sb.send( "buttonOn", false);
+  }
 }
 }
 }

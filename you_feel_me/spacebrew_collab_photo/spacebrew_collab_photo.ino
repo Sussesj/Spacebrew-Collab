@@ -21,7 +21,7 @@ void loop() {
   if(digitalRead(button01) == LOW) 
   {
     //switch is pressed - pullup keeps pin high normally
-    delay(100); //delay to debounce switch
+   
     running = !running;  //toggle running variable
     digitalWrite(ledPin, running);
    }
@@ -31,6 +31,5 @@ void loop() {
    
     // wait to send the next value so that you
     // don't clog up the serial port
-    delay(100);
   
 }
